@@ -1,0 +1,149 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>Scramble Sky</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--n:#14213d;--a:#ffb347;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*,*:before,*:after{box-sizing:inherit}
+body{margin:0;min-height:100vh;color:#fff;font-family:Montserrat,system-ui,-apple-system,"Segoe UI",sans-serif;background:linear-gradient(#14213d,#4a4580 50%,#e8895c) fixed}
+.hidden{display:none!important}
+.w{max-width:620px;margin:0 auto;padding:0 14px 30px}
+h1{margin:14px 0 0;font-size:32px;font-weight:800;text-align:center}
+svg{display:block;width:100%;height:auto}
+.card{background:rgba(20,33,61,.78);border-radius:10px;padding:18px;margin-bottom:14px}
+h2{margin:0 0 10px;font-size:18px}h3{font-size:15px;margin:16px 0 6px}
+label{display:block;font-size:12px;font-weight:600;margin:12px 0 5px}
+input{width:100%;font:inherit;font-size:16px;padding:11px 12px;border:0;border-radius:6px;background:#fff;color:var(--n)}
+button{font:inherit;font-size:13px;font-weight:600;color:#fff;background:transparent;border:1.5px solid #cbbcd9;border-radius:6px;padding:10px 14px;cursor:pointer}
+button.p{background:var(--a);color:var(--n);border-color:var(--a);font-weight:700;width:100%;margin-top:16px;padding:12px}
+button:disabled{opacity:.55;cursor:default}button.on{background:#fff;color:var(--n)}
+.note{font-size:12px;line-height:1.5;margin:12px 0 0;opacity:.85}
+ul.r{margin:0;padding-left:18px;font-size:14px;line-height:1.6}
+.err{min-height:18px;font-size:13px;font-weight:600;margin-top:10px}
+#cl{list-style:none;margin:4px 0 0;padding:0}#cl button{display:block;width:100%;text-align:left;border:0;border-bottom:1px solid rgba(255,255,255,.15);border-radius:0;font-weight:500}
+.row{display:flex;gap:8px;margin-top:10px}.row button{flex:1}
+.sb{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:#14213d;display:flex;justify-content:space-between;align-items:center;padding:8px 14px;margin:0 -14px;border-bottom:1px solid #2f3b66}
+.st{display:flex;gap:16px;font-size:11px;font-weight:600;opacity:.9}.st b{display:block;font-size:17px;font-variant-numeric:tabular-nums}
+.nv{display:flex;gap:5px;justify-content:center;margin:12px 0}.nv button{padding:0;width:28px;height:28px;border-radius:50%;font-size:12px}
+.nv .d{background:#7bc67e;color:var(--n);border-color:#7bc67e}.nv .c{outline:2px solid var(--a);outline-offset:2px}
+.clue{font-size:14px;line-height:1.4;text-align:center}
+.jm{display:flex;gap:5px;justify-content:center;flex-wrap:wrap;margin:14px 0 4px}.jm span{width:30px;height:36px;display:grid;place-items:center;background:#fff3e0;color:var(--n);font-weight:800;font-size:18px;border-radius:6px}
+.sl{container-type:inline-size;display:flex;gap:5px;justify-content:center;margin:12px 0}
+.s{width:min(34px,calc((100cqw - 45px)/10));height:42px;display:grid;place-items:center;background:#fff;color:var(--n);font-weight:800;font-size:20px;border-radius:6px;cursor:pointer}
+.s.on{outline:3px solid var(--a)}.s.h{background:#ffd9a0}.ok .s{background:#b8e6b0}
+table{width:100%;border-collapse:collapse;font-size:13px}td,th{padding:6px 4px;text-align:left;border-bottom:1px solid rgba(255,255,255,.15)}td.n{text-align:right}
+.big{font-size:20px;font-weight:600;margin:4px 0}
+#toast{position:fixed;top:calc(env(safe-area-inset-top,0px) + 56px);left:50%;transform:translateX(-50%);background:#fff;color:var(--n);font-size:14px;font-weight:700;padding:10px 16px;border-radius:8px;opacity:0;transition:opacity .3s;pointer-events:none;z-index:20;max-width:92%;text-align:center}#toast.on{opacity:1}
+#kb{position:fixed;top:0;left:0;width:1px;height:1px;opacity:0;border:0;padding:0;font-size:16px}
+</style></head><body><div class="w">
+<h1>Scramble Sky</h1>
+<svg viewBox="0 0 320 130" aria-hidden="true"><circle cx="255" cy="104" r="22" fill="#ffd89b"/><ellipse cx="60" cy="30" rx="26" ry="7" fill="#fff" opacity=".25"/><ellipse cx="110" cy="40" rx="20" ry="5" fill="#fff" opacity=".2"/><ellipse cx="270" cy="24" rx="24" ry="6" fill="#fff" opacity=".22"/>
+<polygon points="0,130 90,66 130,90 210,18 300,130" fill="#2b2d5b"/><polygon points="210,18 196,34 205,31 211,38 217,31 224,36" fill="#fff"/>
+<line x1="14" y1="118" x2="210" y2="16" stroke="#fff" stroke-dasharray="3 5" opacity=".45"/>
+<g id="fl" opacity="0"><line x1="210" y1="18" x2="210" y2="2" stroke="#fff" stroke-width="1.5"/><polygon points="210,2 224,6 210,10" fill="#ffb347"/></g>
+<g id="pl"><polygon points="0,-6 13,0 0,6 3,0" fill="#fff" stroke="#14213d" stroke-width=".8"/></g></svg>
+<main>
+<section class="card" id="s-form"><h2>Before you play</h2><form id="f" novalidate>
+<label for="nm">Name</label><input type="text" id="nm" autocomplete="name" maxlength="60">
+<label for="cs">Club</label><input type="text" id="cs" autocomplete="off" placeholder="Type to search your club"><ul id="cl"></ul>
+<div id="ow" class="hidden"><div class="row"><button type="button" id="yr">I'm a Rotaractor</button><button type="button" id="nr">Not a Rotaractor</button></div>
+<div id="ow2" class="hidden"><label for="ot">Your club name</label><input type="text" id="ot" maxlength="60"></div></div>
+<label for="em">Email</label><input type="email" id="em" autocomplete="email" inputmode="email">
+<p class="note">Your email is used only to keep this to one attempt per person and is never shown. Leaderboards show only your name and club.</p>
+<div class="err" id="fm" role="alert"></div><button class="p" id="fb" type="submit">Continue</button></form>
+<p style="text-align:center;margin:14px 0 0"><button id="lb0" type="button">View leaderboards</button></p></section>
+<section class="card hidden" id="s-rules"><h2>Rules</h2><ul class="r">
+<li>One attempt per email.</li>
+<li>You have 40 minutes. The clock starts when you tap Start and keeps running if you leave.</li>
+<li>To continue later, reopen this page on the same phone or computer with the same email.</li>
+<li>Unscramble all 10 words. Wrong answers cost nothing, so keep trying.</li>
+<li>One hint per word: tap a square, then tap Hint to reveal that letter. Each hint adds 90 seconds to your time.</li></ul>
+<div class="err" id="rm" role="alert"></div><button class="p" id="go">Start</button></section>
+<section class="card hidden" id="s-end"><h2 id="et"></h2><div id="eb"></div><div id="bd"></div><button class="p" id="back" style="display:none">Back</button></section>
+<div class="hidden" id="s-play">
+<div class="sb"><div class="st"><div>Time<b id="tm">0:00</b></div><div>Left<b id="lf">40:00</b></div><div>Hints<b id="hc">0</b></div></div><button id="hb">Hint</button></div>
+<div class="nv" id="nv"></div><div class="card"><div class="clue" id="cu"></div><div class="jm" id="jm"></div><div class="sl" id="sl"></div>
+<button class="p" id="sub">Submit word</button></div></div>
+</main></div><div id="toast" role="status"></div>
+<input id="kb" autocomplete="off" autocapitalize="characters" autocorrect="off" spellcheck="false" aria-label="Type letters">
+<script>
+const API_URL='https://script.google.com/macros/s/AKfycbz3nVAa1YhP6wfzx-OkA9GkbT-MLl2ap5WSOWMQ0n3JTGK5bEWEAg65x-i1Hn_RL21a/exec',LIMIT=2400,HP=90,MARKS=[480,960,1440,1920,2340],PREFIX='Rotaract Club of ';
+const CLUBS=["Adithya", "AIHSHEW", "AJK College of Arts and Science", "Akshaya College of Arts and Science", "Akshaya College of Engineering & Technology", "Coimbatore Central", "Coimbatore Changemakers", "Coimbatore City", "Coimbatore Comito", "Coimbatore Cosmopolitan", "Coimbatore Cosmos", "Coimbatore Crystals", "Coimbatore Gaalaxy", "Coimbatore Global", "Coimbatore Green City", "Coimbatore Ikons", "Coimbatore Institute Of Technology", "Coimbatore Main", "Coimbatore Majestic", "Coimbatore Millennium", "Coimbatore New Gen", "Coimbatore Nexus", "Coimbatore Royals", "Coimbatore RS Puram", "Coimbatore Smart City", "Coimbatore Sparks", "Coimbatore Spectrum", "Coimbatore Symphony", "Coimbatore Texcity", "Coimbatore Unicorns", "Coimbatore Unique", "Coimbatore Unity", "Coimbatore Uptown", "CUG (COVAI USER GROUP)", "Dr. N.G.P Arts & Science College", "Dr. N.G.P. Institute of Technology", "GCT Coimbatore", "Happy Valley", "HICAS", "Hindusthan College of Engineering and Technology", "Info Institute of Engineering", "JSS Institute of Naturopathy & Yogic Sciences", "Karpagam Academy of Higher Education", "Karpagam College of Engineering", "Karunya School of Management", "Karunya University", "Kathir College of Engineering", "KG College of Arts & Science", "KGISL Institute of Technology", "Kovai Knights", "KPR Institute of Engineering and Technology", "KPRCAS", "Kumaraguru College of Liberal Arts & Science", "Kumaraguru College of Technology", "Lead College of Management, Dhoni", "LIA (Lead India Ahead)", "Martin Homeopathy Medical College", "Nehru College of Aeronautics and Applied Sciences", "Nehru Institute of Engineering and Technology", "PSG CAS", "PSG iTech", "PSGR Krishnammal College for Women", "Royal Care Institute of Nursing", "RVS Technical Campus", "Saibaba Colony", "SNS College of Technology", "Sri Krishna Arts & Science College", "Sri Krishna College of Engineering and Technology", "Sri Ramakrishna College of Arts and Science", "Sri Ramakrishna Institute of Technology", "Sri Ramalinga Sowdambigai College", "Sri Shakti Institute of Engineering & Technology", "TNAU (Tamil Nadu Agricultural University)", "UIT", "United College of Arts and Science", "United College of Pharmacy", "United College of Physiotherapy", "Vadakkencherry", "VLB Janakiammal College of Arts and Science", "Western Valley", "Young Vibrants"];
+const WORDS=[["CARTRATO","Our club's family name"],["JECTPRO","A planned activity with a goal"],["VICESER","What we give, \"above self\""],["TERCHAR","Founding document of a club"],["DENTPRISE","Heads the board"],["TEUNVOLER","Gives time without pay"],["MUNITYCOM","The people we serve"],["SABMASORAD","Goodwill representative"],["DEARSHIPEL","A skill we build through roles"],["TIVINEIATI","Taking the first step yourself"]];
+const $=id=>document.getElementById(id),N=WORDS.length;
+let S={},A=[],L=[],ok=[],hint={},cur=0,sel=0,tick=null,busy=false,rot=null,pick='',shown={},ALL=CLUBS.slice();
+const nz=s=>String(s).toLowerCase().replace(/rotaract club of/g,'').replace(/[^a-z0-9 ]/g,' ').replace(/\s+/g,' ').trim();
+const lev=(a,b)=>{let p=[...Array(b.length+1).keys()];for(let i=1;i<=a.length;i++){let c=[i];for(let j=1;j<=b.length;j++)c[j]=Math.min(p[j]+1,c[j-1]+1,p[j-1]+(a[i-1]==b[j-1]?0:1));p=c}return p[b.length]};
+const fmt=s=>{s=Math.max(0,Math.round(s));return Math.floor(s/60)+':'+String(s%60).padStart(2,'0')};
+const short=n=>String(n).replace(PREFIX,'');
+function show(id){['s-form','s-rules','s-end','s-play'].forEach(x=>$(x).classList.toggle('hidden',x!=id));window.scrollTo(0,0)}
+function toast(t){const e=$('toast');e.textContent=t;e.classList.add('on');clearTimeout(toast.t);toast.t=setTimeout(()=>e.classList.remove('on'),3500)}
+async function api(b){if(API_URL.indexOf('PASTE')===0)throw new Error('This page is not connected to its scoring script yet.');
+ let r;try{r=await fetch(API_URL,{method:'POST',body:JSON.stringify(b)})}catch(e){throw new Error('No connection. Check your internet and try again.')}
+ let j;try{j=await r.json()}catch(e){throw new Error('Unexpected reply from the server.')}
+ if(j.error)throw new Error(j.error);return j}
+function setBusy(b,id){busy=b;$(id).disabled=b}
+function plane(n){const t=n/N,x=14+196*t,y=118-102*t;$('pl').setAttribute('transform','translate('+x+','+y+') rotate(-27)');$('fl').setAttribute('opacity',n>=N?1:0)}
+plane(0);
+/* club search */
+api({action:'clubs'}).then(r=>(r.clubs||[]).forEach(n=>{if(!ALL.some(x=>nz(x)==nz(n)))ALL.push(n)})).catch(()=>{});
+function addLi(t,f){const li=document.createElement('li'),b=document.createElement('button');b.type='button';b.textContent=t;b.onclick=f;li.appendChild(b);$('cl').appendChild(li)}
+function choose(n){pick=n;$('cs').value=n;$('cl').innerHTML='';$('ow').classList.toggle('hidden',n!='Other');if(n!='Other'){rot=null;$('ow2').classList.add('hidden');$('yr').classList.remove('on');$('nr').classList.remove('on')}}
+$('cs').oninput=()=>{pick='';$('ow').classList.add('hidden');$('cl').innerHTML='';const q=nz($('cs').value);if(!q)return;
+ ALL.filter(n=>nz(n).includes(q)).slice(0,6).forEach(n=>addLi(n,()=>choose(n)));addLi("Other / my club isn't listed",()=>choose('Other'))};
+$('yr').onclick=()=>{rot=1;$('yr').classList.add('on');$('nr').classList.remove('on');$('ow2').classList.remove('hidden')};
+$('nr').onclick=()=>{rot=0;$('nr').classList.add('on');$('yr').classList.remove('on');$('ow2').classList.add('hidden')};
+try{const p=JSON.parse(localStorage.getItem('ss_p')||'null');if(p){$('nm').value=p.name||'';$('em').value=p.email||''}}catch(e){}
+$('f').onsubmit=async e=>{e.preventDefault();if(busy)return;$('fm').textContent='';
+ const name=$('nm').value.trim(),email=$('em').value.trim().toLowerCase();let club=pick,note=$('ot').value.trim();
+ if(!name||!club||(club=='Other'&&(rot===null||(rot===1&&!note)))||!/^\S+@\S+\.\S+$/.test(email))return $('fm').textContent='Please fill every field with a valid email.';
+ if(club=='Other'&&rot===1){const q=nz(note),g=ALL.find(n=>{const k=nz(n);return k==q||(q.length>3&&(k.includes(q)||q.includes(k)))||(k.length>5&&lev(k,q)<=2)});
+  if(g&&confirm('Did you mean "'+PREFIX+g+'"?')){club=g;note=''}}
+ if(club!='Other')club=PREFIX+short(club);
+ S.p={name,club,note:club=='Other'?note:'',rot:club=='Other'&&rot===1?1:0,email};
+ try{localStorage.setItem('ss_p',JSON.stringify({name,email}))}catch(e){}
+ setBusy(true,'fb');try{route(await api({action:'status',...S.p}))}catch(err){$('fm').textContent=err.message}setBusy(false,'fb')};
+function route(r){if(r.state=='new')return show('s-rules');if(r.state=='resume')return begin(r);
+ if(r.state=='done')return end('You have already played','Your time: <b>'+fmt(r.totalSec)+'</b>'+(r.rank?' (rank '+r.rank+')':''));
+ end('Your attempt has ended','The 40 minutes ran out, so this attempt is unfinished.')}
+$('go').onclick=async()=>{if(busy)return;$('rm').textContent='';setBusy(true,'go');try{route(await api({action:'start',...S.p}))}catch(err){$('rm').textContent=err.message}setBusy(false,'go')};
+function end(t,html){clearInterval(tick);show('s-end');$('et').textContent=t;$('eb').innerHTML=html?'<p class="big">'+html+'</p>':'';$('bd').innerHTML='<p class="note">Loading leaderboards...</p>';
+ $('back').style.display=t=='Leaderboards'?'block':'none';
+ api({action:'board'}).then(b=>{const d=$('bd');d.innerHTML='';
+  const tb=(h,rows)=>{const t=document.createElement('table'),hd=t.createTHead().insertRow();h.forEach(x=>hd.insertCell().outerHTML='<th>'+x+'</th>');const bd=t.createTBody();
+   if(!rows.length){bd.insertRow().insertCell().textContent='Nobody yet.';return t}
+   rows.forEach(r=>{const tr=bd.insertRow();r.forEach((x,k)=>{const c=tr.insertCell();c.textContent=x;if(k==r.length-1)c.className='n'})});return t};
+  const a=document.createElement('h3');a.textContent='Fastest times';d.append(a,tb(['#','Name','Club','Time'],b.times.map((x,i)=>[i+1,x.name,short(x.club),fmt(x.sec)])));
+  const c=document.createElement('h3');c.textContent='Players per club';d.append(c,tb(['Club','Players'],b.clubs.map(x=>[short(x.club),x.n])))}).catch(()=>{$('bd').innerHTML='<p class="note">Could not load the leaderboards.</p>'})}
+$('lb0').onclick=()=>end('Leaderboards','');$('back').onclick=()=>show('s-form');
+/* game */
+function begin(r){S.startMs=r.startMs;S.off=r.now-Date.now();S.hints=r.hints||0;shown={};
+ ok=[];hint=r.hintlog||{};A=[];L=[];
+ WORDS.forEach((w,i)=>{const n=w[0].length,solved=r.solved.charAt(i+1)=='1';ok[i]=solved;A[i]=solved?r.ans[i].split(''):Array(n).fill('');L[i]=new Set();if(!solved&&hint[i]){A[i][hint[i][0]]=hint[i][1];L[i].add(hint[i][0])}});
+ cur=Math.max(0,ok.indexOf(false));sel=0;show('s-play');draw();clearInterval(tick);tick=setInterval(upd,500);upd()}
+function draw(){const w=WORDS[cur],n=w[0].length;
+ $('nv').innerHTML='';WORDS.forEach((x,i)=>{const b=document.createElement('button');b.textContent=i+1;b.className=(ok[i]?'d ':'')+(i==cur?'c':'');b.onclick=()=>{cur=i;sel=Math.max(0,A[i].findIndex((c,k)=>!L[i].has(k)));draw();$('kb').focus({preventScroll:true})};$('nv').appendChild(b)});
+ $('cu').innerHTML='<b>Word '+(cur+1)+' of '+N+'</b> &middot; '+w[1]+' ('+n+' letters)';
+ $('jm').innerHTML=w[0].split('').map(c=>'<span>'+c+'</span>').join('');
+ const sl=$('sl');sl.className='sl'+(ok[cur]?' ok':'');sl.innerHTML='';
+ A[cur].forEach((c,k)=>{const d=document.createElement('div');d.className='s'+(k==sel&&!ok[cur]?' on':'')+(L[cur].has(k)?' h':'');d.textContent=c;d.onclick=()=>{sel=k;draw();$('kb').focus({preventScroll:true})};sl.appendChild(d)});
+ $('hc').textContent=S.hints;plane(ok.filter(Boolean).length);$('sub').disabled=ok[cur];$('hb').disabled=ok[cur]||!!hint[cur]}
+function nextFree(k,d){let i=k+d;while(i>=0&&i<A[cur].length&&L[cur].has(i))i+=d;return i>=0&&i<A[cur].length?i:k}
+function typ(ch){if(ok[cur]||L[cur].has(sel))return;A[cur][sel]=ch;sel=nextFree(sel,1);draw()}
+function back(){if(ok[cur])return;if(A[cur][sel]&&!L[cur].has(sel))A[cur][sel]='';else{const p=nextFree(sel,-1);if(!L[cur].has(p)){sel=p;A[cur][p]=''}}draw()}
+const kb=$('kb');kb.value='x';
+kb.addEventListener('input',()=>{const v=kb.value;kb.value='x';if(!v.length)return back();const ch=v.replace(/x/i,'').slice(-1)||v.slice(-1);if(/^[a-z]$/i.test(ch))typ(ch.toUpperCase())});
+kb.addEventListener('keydown',e=>{if(e.key=='Backspace'){e.preventDefault();back()}else if(e.key=='Enter'){e.preventDefault();$('sub').click()}});
+document.addEventListener('keydown',e=>{if(!$('s-play').classList.contains('hidden')&&document.activeElement!==kb&&!e.ctrlKey&&!e.metaKey&&!e.altKey&&/^[a-z]$/i.test(e.key)&&document.activeElement.tagName!='INPUT'){kb.focus({preventScroll:true});typ(e.key.toUpperCase())}});
+const now=()=>Date.now()+S.off;
+function upd(){const el=(now()-S.startMs)/1000;if(el>=LIMIT){end('Time is up','The 40 minutes ran out, so this attempt is unfinished.');return}
+ $('tm').textContent=fmt(el+S.hints*HP);$('lf').textContent=fmt(LIMIT-el);
+ MARKS.forEach(t=>{if(el>=t&&!shown[t]){shown[t]=1;if(el<t+10)toast(t==2340?'1 min left':(t/60)+' min used, '+(40-t/60)+' min left')}})}
+$('sub').onclick=async()=>{if(busy||ok[cur])return;const g=A[cur].join('');if(g.length<A[cur].length||A[cur].includes(''))return toast('Fill every square first.');
+ setBusy(true,'sub');try{const r=await api({action:'word',email:S.p.email,i:cur,guess:g});S.off=r.now-Date.now();
+  if(r.state=='expired')end('Time is up','The 40 minutes ran out, so this attempt is unfinished.');
+  else if(r.state=='done'){plane(N);end('You reached the peak!','Your time: <b>'+fmt(r.totalSec)+'</b> (rank '+r.rank+')<br><span class="note">Includes '+r.hints+' hint'+(r.hints==1?'':'s')+' x 90 seconds.</span>')}
+  else if(r.ok){ok[cur]=true;toast('Correct!');const n=ok.indexOf(false);if(n>=0){cur=n;sel=Math.max(0,A[n].findIndex((c,k)=>!L[n].has(k)))}draw()}
+  else toast('Not quite. Try again.')}catch(err){toast(err.message)}setBusy(false,'sub');$('sub').disabled=ok[cur]};
+$('hb').onclick=async()=>{if(busy||ok[cur]||hint[cur])return;if(L[cur].has(sel))return toast('Tap a square first.');
+ setBusy(true,'hb');try{const r=await api({action:'hint',email:S.p.email,i:cur,pos:sel});S.off=r.now-Date.now();S.hints=r.hints;hint[cur]=[sel,r.letter];A[cur][sel]=r.letter;L[cur].add(sel);toast('+90 seconds');draw();upd()}catch(err){toast(err.message)}setBusy(false,'hb');$('hb').disabled=ok[cur]||!!hint[cur]};
+</script></body></html>
